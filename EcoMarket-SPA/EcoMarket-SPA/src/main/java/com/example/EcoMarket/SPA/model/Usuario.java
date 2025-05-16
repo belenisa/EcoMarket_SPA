@@ -1,5 +1,7 @@
 package com.example.EcoMarket.SPA.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +20,11 @@ public class Usuario {
 
     private String nombre;
     private String correo;
-    private String rol; // Ejemplo: "admin", "cliente"
+    public enum Rol {
+    ADMIN, CLIENTE, GERENTE, VENTAS, LOGISTICA
+    }
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("rol")
+    private Rol rol;
 }
