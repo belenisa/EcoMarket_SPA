@@ -37,11 +37,11 @@ public class PedidoController {
         return pedidoService.getPedidoId(id);
     }
 
-    @PutMapping("/{id}")
-    public Pedido actualizarPedido(@PathVariable int id, @RequestBody Pedido pedido) {
-        pedido.setId(id);
-        return pedidoService.updatePedido(pedido);
+    @GetMapping("/usuario/{usuarioId}")
+        public List<Pedido> obtenerPedidosPorUsuario(@PathVariable Integer usuarioId) {
+        return pedidoService.getPedidosPorUsuario(usuarioId);//revisar
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> actualizarPedido(@PathVariable int id, @RequestBody Pedido pedido, @RequestParam String userRole) {
