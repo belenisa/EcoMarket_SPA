@@ -17,20 +17,32 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public Pedido savePedido(Pedido pedido) {
-        return pedidoRepository.save(pedido);
+    public ResponseEntity<Object> savePedido(Pedido pedido, String userRole) {
+        if (!userRole.equals("CLIENTE")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo los clientes pueden agregar pedidos.");
+        }
+        return ResponseEntity.ok(pedidoRepository.save(pedido));
     }
 
-    public Pedido getPedidoId(int id) {
-        return pedidoRepository.findById(id).orElse(null);
+    public ResponseEntity<Object> getPedidoId(int id) {
+        Optional<Pedido> pedido = pedidoRepository.findById(id);
+        return pedido.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido no encontrado"));
     }
 
-    public Pedido updatePedido(Pedido pedido) {
-        return pedidoRepository.save(pedido);
+    public ResponseEntity<Object> updatePedido(Pedido pedido, String userRole) {
+        if (!(userRole.equals("ADMIN") || userRole.equals("GERENTE") || userRole.equals("VENTAS"))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo ADMIN, GERENTE y VENTAS pueden actualizar pedidos.");
+        }
+        return ResponseEntity.ok(pedidoRepository.save(pedido));
     }
 
-    public String deletePedido(int id) {
+    public ResponseEntity<String> deletePedido(int id) {
+        if (!pedidoRepository.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido no encontrado.");
+        }
         pedidoRepository.deleteById(id);
-        return "Pedido eliminado correctamente";
+        return ResponseEntity.ok("Pedido eliminado correctamente.");
     }
 }
+
