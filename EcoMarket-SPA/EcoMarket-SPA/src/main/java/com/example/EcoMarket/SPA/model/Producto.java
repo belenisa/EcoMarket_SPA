@@ -1,5 +1,8 @@
 package com.example.EcoMarket.SPA.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +19,17 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ElementCollection
+    private List<String> producto = new ArrayList<>();
+
     private String nombre;
     private String modelo;
-    private int stock;
+    private int stock; // solo lo actualiza el administrador
     private double precio;
-    private String proveedor;
+
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id", nullable = false) // Clave foránea
+    private Proveedor proveedor;
+
+    
 }
