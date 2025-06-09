@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
@@ -22,10 +24,6 @@ public class Pedido {
     private int id;
 
     private LocalDate fecha;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 
     private double total;
 
@@ -52,4 +50,12 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @JsonProperty("estadoPedido")
     private EstadoPedido estado;
+
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false) // Clave foránea
+    private Producto producto;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false) // Clave foránea
+    private Usuario usuario;
 }
