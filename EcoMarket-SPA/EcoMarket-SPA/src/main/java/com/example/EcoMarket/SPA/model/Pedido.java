@@ -51,11 +51,13 @@ public class Pedido {
     @JsonProperty("estadoPedido")
     private EstadoPedido estado;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id", nullable = false) // Clave foránea
-    private Producto producto;
+    
+    @ManyToMany
+    @JoinTable(name = "pedido_producto", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "producto_id"))
+     private List<Producto> productos = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false) // Clave foránea
-    private Usuario usuario;
+     @ManyToOne
+     @JoinColumn(name = "usuario_id", nullable = false)
+     private Usuario usuario;
+
 }
