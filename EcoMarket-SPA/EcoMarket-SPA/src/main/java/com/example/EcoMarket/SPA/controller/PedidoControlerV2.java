@@ -1,6 +1,7 @@
 package com.example.EcoMarket.SPA.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +21,18 @@ public class PedidoControlerV2 {
     private PedidoService pedidoService;
     private final String usuarioAutorizado = "CLIENTE";
 
+    public PedidoControllerV2(PedidoService pedidoService) {
+        this.pedidoService = pedidoService;
+    }
+
     
     @GetMapping
     @Operation(summary = "Obtener lista de los pedidos", description = "Obtiene una lista de todos los pedidos con el producto y total")
     public List<Pedido> listarPedidos() {
         return pedidoService.getPedidos().stream()
-                        .map(PedidoDTO::new)
+                        .map(Pedido::new)
                         .collect(Collectors.toList());
     }
-
 
     public void PedidoController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
