@@ -19,14 +19,16 @@ public class PedidoControlerV2 {
     @Autowired
     private PedidoService pedidoService;
     private final String usuarioAutorizado = "CLIENTE";
+
     
-
-
     @GetMapping
-    @Operation(summary = "Obtener lista de los pedidos", description = "Obtiene una lista de todos los pedidos")
+    @Operation(summary = "Obtener lista de los pedidos", description = "Obtiene una lista de todos los pedidos con el producto y total")
     public List<Pedido> listarPedidos() {
-        return pedidoService.getPedidos();
+        return pedidoService.getPedidos().stream()
+                        .map(PedidoDTO::new)
+                        .collect(Collectors.toList());
     }
+
 
     public void PedidoController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
