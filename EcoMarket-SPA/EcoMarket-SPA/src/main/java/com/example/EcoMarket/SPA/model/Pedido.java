@@ -52,9 +52,19 @@ public class Pedido {
     private EstadoPedido estado;
 
     
+    @PrePersist
+    @PreUpdate
+    public void calcularTotal() {
+        this.total = productos.stream()
+                .mapToDouble(Producto::getPrecio)
+                .sum();
+    }
+
+
+    
     @ManyToMany
     @JoinTable(name = "pedido_producto", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "producto_id"))
-     private List<Producto> productos = new ArrayList<>();
+    private List<Producto> productos = new ArrayList<>();
 
      @ManyToOne
      @JoinColumn(name = "usuario_id", nullable = false)
