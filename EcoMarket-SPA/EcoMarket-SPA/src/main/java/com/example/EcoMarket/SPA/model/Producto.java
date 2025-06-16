@@ -31,5 +31,9 @@ public class Producto {
     @JoinColumn(name = "proveedor_id", nullable = false) // Clave foránea
     private Proveedor proveedor;
 
+    @ManyToOne
+    @JoinColumn(name = "pedido_id", nullable = false) // Clave foránea
+    private Pedido pedido;
+
     
 }
