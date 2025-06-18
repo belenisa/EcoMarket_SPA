@@ -35,7 +35,7 @@ public class ProductoControllerV2 {
     @PutMapping("/{id}")
     public ResponseEntity<Object> actualizarProducto(@PathVariable int id, @RequestBody Producto producto, @RequestParam String userRole) {
          if (!(userRole.equals("ADMIN"))) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo ADMIN pueden actualizar pedidos.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo ADMIN pueden actualizar productos.");
         }
         pedido.setId(id);
         return ResponseEntity.ok(productoServiceV2.updatePedido(producto));
