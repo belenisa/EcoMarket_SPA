@@ -17,14 +17,13 @@ public class DetallePedido {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id", nullable = false) // Clave foránea
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id")
+    @JoinColumn(name = "producto_id", nullable = false) // Clave foránea
     private Producto producto;
 
     private int cantidad;
 
-    private double precioUnitario;
 }
